@@ -84,6 +84,10 @@ export class ApiClient {
     return this._workspaceId;
   }
 
+  get baseUrl() {
+    return this._baseUrl;
+  }
+
   setToken(token: string | null) {
     this._token = token;
   }

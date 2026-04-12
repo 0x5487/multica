@@ -9,6 +9,7 @@ export class SvelteApiClient extends ApiClient {
 
   setToken(token: string | null) {
     this.token = token;
+    super.setToken(token);
   }
 
   async request<T>(path: string, options: RequestInit = {}): Promise<T> {
@@ -17,8 +18,7 @@ export class SvelteApiClient extends ApiClient {
       headers.set('Authorization', `Bearer ${this.token}`);
     }
 
-    // Using _baseUrl from base class as baseUrl getter is missing in current ApiClient
-    const response = await fetch(`${this._baseUrl}${path}`, {
+    const response = await fetch(`${this.baseUrl}${path}`, {
       ...options,
       headers,
     });

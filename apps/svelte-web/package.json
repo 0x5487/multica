@@ -10,6 +10,9 @@
     "check": "svelte-kit sync && svelte-check --tsconfig ./tsconfig.json",
     "check:watch": "svelte-kit sync && svelte-check --tsconfig ./tsconfig.json --watch"
   },
+  "dependencies": {
+    "@multica/core": "workspace:*"
+  },
   "devDependencies": {
     "@sveltejs/adapter-node": "^5.2.9",
     "@sveltejs/kit": "^2.15.1",
@@ -17,6 +20,7 @@
     "@tailwindcss/vite": "catalog:",
     "svelte": "^5.16.0",
     "svelte-check": "^4.1.1",
+    "tailwind-variants": "^3.2.2",
     "tailwindcss": "catalog:",
     "tailwindcss-animate": "^1.0.7",
     "typescript": "^5.7.2",
