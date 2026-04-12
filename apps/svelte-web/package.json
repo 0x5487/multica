@@ -14,8 +14,11 @@
     "@sveltejs/adapter-node": "^5.2.9",
     "@sveltejs/kit": "^2.15.1",
     "@sveltejs/vite-plugin-svelte": "^5.0.3",
+    "@tailwindcss/vite": "catalog:",
     "svelte": "^5.16.0",
     "svelte-check": "^4.1.1",
+    "tailwindcss": "catalog:",
+    "tailwindcss-animate": "^1.0.7",
     "typescript": "^5.7.2",
     "vite": "^6.0.3"
   }

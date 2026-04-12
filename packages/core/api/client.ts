@@ -64,30 +64,38 @@ export interface LoginResponse {
 }
 
 export class ApiClient {
-  private baseUrl: string;
-  private token: string | null = null;
-  private workspaceId: string | null = null;
-  private logger: Logger;
-  private options: ApiClientOptions;
+  protected _baseUrl: string;
+  protected _token: string | null = null;
+  protected _workspaceId: string | null = null;
+  protected _logger: Logger;
+  protected _options: ApiClientOptions;
 
   constructor(baseUrl: string, options?: ApiClientOptions) {
-    this.baseUrl = baseUrl;
-    this.options = options ?? {};
-    this.logger = options?.logger ?? noopLogger;
+    this._baseUrl = baseUrl;
+    this._options = options ?? {};
+    this._logger = options?.logger ?? noopLogger;
+  }
+
+  get token() {
+    return this._token;
+  }
+
+  get workspaceId() {
+    return this._workspaceId;
   }
 
   setToken(token: string | null) {
-    this.token = token;
+    this._token = token;
   }
 
   setWorkspaceId(id: string | null) {
-    this.workspaceId = id;
+    this._workspaceId = id;
   }
 
-  private authHeaders(): Record<string, string> {
+  protected authHeaders(): Record<string, string> {
     const headers: Record<string, string> = {};
-    if (this.token) headers["Authorization"] = `Bearer ${this.token}`;
-    if (this.workspaceId) headers["X-Workspace-ID"] = this.workspaceId;
+    if (this._token) headers["Authorization"] = `Bearer ${this._token}`;
+    if (this._workspaceId) headers["X-Workspace-ID"] = this._workspaceId;
     return headers;
   }
 

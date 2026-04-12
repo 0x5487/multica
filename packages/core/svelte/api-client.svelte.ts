@@ -30,5 +30,3 @@ export class SvelteApiClient extends ApiClient {
     return response.json();
   }
 }
-
-export const api = new SvelteApiClient('/api');

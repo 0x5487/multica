@@ -58,7 +58,8 @@
     "./logger": "./logger.ts",
     "./utils": "./utils.ts",
     "./constants/*": "./constants/*.ts",
-    "./platform": "./platform/index.ts"
+    "./platform": "./platform/index.ts",
+    "./svelte": "./svelte/index.ts"
   },
   "dependencies": {
     "@tanstack/react-query": "catalog:",
@@ -66,11 +67,13 @@
     "zustand": "catalog:"
   },
   "peerDependencies": {
-    "react": "catalog:"
+    "react": "catalog:",
+    "svelte": "^5.0.0"
   },
   "devDependencies": {
     "@multica/tsconfig": "workspace:*",
     "@types/react": "catalog:",
+    "svelte": "^5.16.0",
     "typescript": "catalog:",
     "vitest": "catalog:"
   }
