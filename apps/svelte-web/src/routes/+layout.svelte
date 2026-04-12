@@ -1,5 +1,6 @@
 <script lang="ts">
   import "../app.css";
+  import { onMount } from "svelte";
   import { setCoreContext } from "@multica/core/svelte";
   import Sidebar from "$lib/components/navigation/Sidebar.svelte";
 
@@ -10,6 +11,12 @@
 
   // Sync token from data (both server and client)
   api.setToken(data.token);
+
+  onMount(() => {
+    if (window.matchMedia('(prefers-color-scheme: dark)').matches) {
+      document.documentElement.classList.add('dark');
+    }
+  });
 
   $effect(() => {
     // Keep token in sync if it changes on the client
