@@ -1,11 +1,12 @@
 import type { Handle } from '@sveltejs/kit';
+import { env } from '$env/dynamic/private';
 
 export const handle: Handle = async ({ event, resolve }) => {
   const token = event.cookies.get('multica_token');
   
   // 1. Proxy API requests to the backend service
   if (event.url.pathname.startsWith('/api') || event.url.pathname.startsWith('/auth') || event.url.pathname.startsWith('/ws')) {
-    const backendUrl = process.env.REMOTE_API_URL || 'http://localhost:8080';
+    const backendUrl = env.REMOTE_API_URL || 'http://localhost:8080';
     const destination = `${backendUrl}${event.url.pathname}${event.url.search}`;
     
     const requestHeaders = new Headers(event.request.headers);

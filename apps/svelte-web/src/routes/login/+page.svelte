@@ -18,7 +18,7 @@
           <Input name="email" type="email" placeholder="Email" required />
         </div>
         <div class="grid gap-2">
-          <Input name="name" type="text" placeholder="Name" required />
+          <Input name="code" type="text" placeholder="Verification Code (Default: 888888)" />
         </div>
         <Button type="submit" class="w-full">Sign in</Button>
       </form>

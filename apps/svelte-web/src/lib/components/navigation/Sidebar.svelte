@@ -24,4 +24,9 @@
       {/each}
     {/if}
   </nav>
+  <div class="p-4 border-t">
+    <form method="POST" action="/logout">
+      <Button type="submit" variant="outline" class="w-full">Logout</Button>
+    </form>
+  </div>
 </aside>
