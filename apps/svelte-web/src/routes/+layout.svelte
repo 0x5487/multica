@@ -1,7 +1,7 @@
 <script lang="ts">
   import "../app.css";
   import { setCoreContext } from "@multica/core/svelte";
-  import { onMount } from "svelte";
+  import Sidebar from "$lib/components/navigation/Sidebar.svelte";
 
   let { data, children } = $props();
   
@@ -22,4 +22,11 @@
   });
 </script>
 
-{@render children()}
+<div class="flex h-screen overflow-hidden">
+  {#if data.token}
+    <Sidebar />
+  {/if}
+  <main class="flex-1 overflow-y-auto">
+    {@render children()}
+  </main>
+</div>
