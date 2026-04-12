@@ -1,0 +1,20 @@
+{
+  "name": "@multica/ui-svelte",
+  "version": "0.1.0",
+  "private": true,
+  "type": "module",
+  "exports": {
+    "./components/*": "./src/lib/components/*.svelte",
+    "./ui/*": "./src/lib/components/ui/*.svelte",
+    "./utils": "./src/lib/utils.ts"
+  },
+  "dependencies": {
+    "bits-ui": "^1.0.0-next.67",
+    "clsx": "^2.1.1",
+    "tailwind-merge": "^2.5.5"
+  },
+  "devDependencies": {
+    "svelte": "^5.16.0",
+    "typescript": "^5.7.2"
+  }
+}
