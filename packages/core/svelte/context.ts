@@ -3,9 +3,9 @@ import { SvelteApiClient } from './api-client.svelte';
 import { WorkspaceStore } from './workspace-store.svelte';
 import { IssueStore } from './issue-store.svelte';
 
-const CLIENT_KEY = Symbol('client');
-const WORKSPACE_KEY = Symbol('workspace');
-const ISSUE_KEY = Symbol('issue');
+const CLIENT_KEY = Symbol.for('multica.client');
+const WORKSPACE_KEY = Symbol.for('multica.workspace');
+const ISSUE_KEY = Symbol.for('multica.issue');
 
 export function setCoreContext(baseUrl: string) {
   const api = new SvelteApiClient(baseUrl);

@@ -11,7 +11,7 @@ export class WorkspaceStore {
     this.loading = true;
     try {
       const data = await this.api.request<any[]>('/workspaces');
-      this.workspaces = data;
+      this.workspaces = data || [];
     } catch (e) {
       console.error("Failed to fetch workspaces:", e);
       this.workspaces = [];
