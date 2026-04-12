@@ -227,9 +227,15 @@ importers:
       '@multica/core':
         specifier: workspace:*
         version: link:../../packages/core
+      clsx:
+        specifier: 'catalog:'
+        version: 2.1.1
       svelte-dnd-action:
         specifier: ^0.9.69
         version: 0.9.69(svelte@5.55.3(@typescript-eslint/types@8.58.1))
+      tailwind-merge:
+        specifier: 'catalog:'
+        version: 3.5.0
     devDependencies:
       '@sveltejs/adapter-node':
         specifier: ^5.2.9
