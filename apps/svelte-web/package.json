@@ -12,7 +12,9 @@
   },
   "dependencies": {
     "@multica/core": "workspace:*",
-    "svelte-dnd-action": "^0.9.69"
+    "clsx": "catalog:",
+    "svelte-dnd-action": "^0.9.69",
+    "tailwind-merge": "catalog:"
   },
   "devDependencies": {
     "@sveltejs/adapter-node": "^5.2.9",

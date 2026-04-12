@@ -9,9 +9,6 @@
   // Initialize Core Context (per-session)
   const { api, workspaceStore } = setCoreContext("/api");
 
-  // Sync token from data (both server and client)
-  api.setToken(data.token);
-
   onMount(() => {
     if (window.matchMedia('(prefers-color-scheme: dark)').matches) {
       document.documentElement.classList.add('dark');
@@ -19,21 +16,20 @@
   });
 
   $effect(() => {
-    // Keep token in sync if it changes on the client
-    api.setToken(data.token);
-    
-    // Auto-fetch workspaces on login/initial mount
     if (data.token) {
+      api.setToken(data.token);
       workspaceStore.fetchWorkspaces();
+    } else {
+      api.setToken(null);
     }
   });
 </script>
 
-<div class="flex h-screen overflow-hidden">
+<div class="flex h-screen w-full overflow-hidden bg-background">
   {#if data.token}
     <Sidebar />
   {/if}
-  <main class="flex-1 overflow-y-auto">
+  <main class="flex-1 h-full overflow-y-auto">
     {@render children()}
   </main>
 </div>

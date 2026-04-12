@@ -104,9 +104,9 @@ export class ApiClient {
   }
 
   private handleUnauthorized() {
-    this.token = null;
-    this.workspaceId = null;
-    this.options.onUnauthorized?.();
+    this._token = null;
+    this._workspaceId = null;
+    this._options.onUnauthorized?.();
   }
 
   private async parseErrorMessage(res: Response, fallback: string): Promise<string> {
@@ -119,7 +119,7 @@ export class ApiClient {
     return fallback;
   }
 
-  private async fetch<T>(path: string, init?: RequestInit): Promise<T> {
+  protected async fetch<T>(path: string, init?: RequestInit): Promise<T> {
     const rid = crypto.randomUUID().slice(0, 8);
     const start = Date.now();
     const method = init?.method ?? "GET";
@@ -131,9 +131,9 @@ export class ApiClient {
       ...((init?.headers as Record<string, string>) ?? {}),
     };
 
-    this.logger.info(`→ ${method} ${path}`, { rid });
+    this._logger.info(`→ ${method} ${path}`, { rid });
 
-    const res = await fetch(`${this.baseUrl}${path}`, {
+    const res = await fetch(`${this._baseUrl}${path}`, {
       ...init,
       headers,
       credentials: "include",
@@ -143,11 +143,11 @@ export class ApiClient {
       if (res.status === 401) this.handleUnauthorized();
       const message = await this.parseErrorMessage(res, `API error: ${res.status} ${res.statusText}`);
       const logLevel = res.status === 404 ? "warn" : "error";
-      this.logger[logLevel](`← ${res.status} ${path}`, { rid, duration: `${Date.now() - start}ms`, error: message });
+      this._logger[logLevel](`← ${res.status} ${path}`, { rid, duration: `${Date.now() - start}ms`, error: message });
       throw new Error(message);
     }
 
-    this.logger.info(`← ${res.status} ${path}`, { rid, duration: `${Date.now() - start}ms` });
+    this._logger.info(`← ${res.status} ${path}`, { rid, duration: `${Date.now() - start}ms` });
 
     // Handle 204 No Content
     if (res.status === 204) {
@@ -624,9 +624,9 @@ export class ApiClient {
 
     const rid = crypto.randomUUID().slice(0, 8);
     const start = Date.now();
-    this.logger.info("→ POST /api/upload-file", { rid });
+    this._logger.info("→ POST /api/upload-file", { rid });
 
-    const res = await fetch(`${this.baseUrl}/api/upload-file`, {
+    const res = await fetch(`${this._baseUrl}/api/upload-file`, {
       method: "POST",
       headers: this.authHeaders(),
       body: formData,
@@ -636,11 +636,11 @@ export class ApiClient {
     if (!res.ok) {
       if (res.status === 401) this.handleUnauthorized();
       const message = await this.parseErrorMessage(res, `Upload failed: ${res.status}`);
-      this.logger.error(`← ${res.status} /api/upload-file`, { rid, duration: `${Date.now() - start}ms`, error: message });
+      this._logger.error(`← ${res.status} /api/upload-file`, { rid, duration: `${Date.now() - start}ms`, error: message });
       throw new Error(message);
     }
 
-    this.logger.info(`← ${res.status} /api/upload-file`, { rid, duration: `${Date.now() - start}ms` });
+    this._logger.info(`← ${res.status} /api/upload-file`, { rid, duration: `${Date.now() - start}ms` });
     return res.json() as Promise<Attachment>;
   }
 
