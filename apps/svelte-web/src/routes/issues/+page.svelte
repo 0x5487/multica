@@ -1,17 +1,21 @@
 <script lang="ts">
   import { useWorkspaceStore, useIssueStore } from "@multica/core/svelte";
   import { Button } from "$lib/components/ui/button";
+  import IssueList from "$lib/components/issues/IssueList.svelte";
+  import IssueBoard from "$lib/components/issues/IssueBoard.svelte";
 
   const workspaceStore = useWorkspaceStore();
   const issueStore = useIssueStore();
+
+  let view = $state<"board" | "list">("board");
+  
+  const issues = $derived(issueStore.getIssues(workspaceStore.activeWorkspaceId || ""));
 
   $effect(() => {
     if (workspaceStore.activeWorkspaceId) {
       issueStore.fetchIssues(workspaceStore.activeWorkspaceId);
     }
   });
-
-  let view = $state<"board" | "list">("board");
 </script>
 
 <div class="p-6 space-y-4">
@@ -24,8 +28,8 @@
   </div>
 
   {#if view === "board"}
-    <div class="text-muted-foreground">Board view coming soon...</div>
+    <IssueBoard {issues} />
   {:else}
-    <div class="text-muted-foreground">List view coming soon...</div>
+    <IssueList {issues} />
   {/if}
 </div>
