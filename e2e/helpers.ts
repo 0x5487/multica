@@ -16,10 +16,27 @@ export async function loginAsDefault(page: Page) {
   await api.ensureWorkspace("E2E Workspace", DEFAULT_E2E_WORKSPACE);
 
   const token = api.getToken();
+  if (!token) throw new Error("Failed to get token during E2E login");
+
   await page.goto("/login");
+
+  // Set LocalStorage for client-side use
   await page.evaluate((t) => {
     localStorage.setItem("multica_token", t);
   }, token);
+
+  // Set Cookie for SvelteKit server-side use (hooks.server.ts)
+  await page.context().addCookies([
+    {
+      name: "multica_token",
+      value: token,
+      domain: "localhost",
+      path: "/",
+      httpOnly: true,
+      secure: false
+    }
+  ]);
+
   await page.goto("/issues");
   await page.waitForURL("**/issues", { timeout: 10000 });
 }

@@ -1,8 +1,9 @@
 <script lang="ts">
   import * as Table from "$lib/components/ui/table";
   import { Badge } from "$lib/components/ui/badge";
+  import type { Issue } from "@multica/core/types";
 
-  let { issues = [] } = $props();
+  let { issues = [] as Issue[] } = $props();
 </script>
 
 <Table.Root>
@@ -16,7 +17,9 @@
   <Table.Body>
     {#each issues as issue (issue.id)}
       <Table.Row>
-        <Table.Cell class="font-medium">{issue.title}</Table.Cell>
+        <Table.Cell class="font-medium">
+          <a class="hover:underline" href={`/issues/${issue.id}`}>{issue.title}</a>
+        </Table.Cell>
         <Table.Cell><Badge variant="outline">{issue.status}</Badge></Table.Cell>
         <Table.Cell>{issue.priority}</Table.Cell>
       </Table.Row>

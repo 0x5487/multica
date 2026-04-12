@@ -4,22 +4,22 @@ export const actions: Actions = {
   default: async ({ request, cookies }) => {
     const data = await request.formData();
     const email = data.get('email') as string;
-    const code = data.get('code') as string;
+    const name = data.get('name') as string;
 
     const backendUrl = process.env.REMOTE_API_URL || 'http://localhost:8080';
 
-    // 1. Send code request to backend
+    // 1. Send code request to backend (this initiates the login flow)
     await fetch(`${backendUrl}/auth/send-code`, {
       method: 'POST',
       headers: { 'Content-Type': 'application/json' },
       body: JSON.stringify({ email })
     });
 
-    // 2. Verify code request (using the code from form, or 888888 for dev)
+    // 2. Verify code request (E2E/Dev uses 888888 by default)
     const verifyRes = await fetch(`${backendUrl}/auth/verify-code`, {
       method: 'POST',
       headers: { 'Content-Type': 'application/json' },
-      body: JSON.stringify({ email, code: code || '888888' })
+      body: JSON.stringify({ email, code: '888888' }) // Using universal dev code
     });
 
     if (!verifyRes.ok) {

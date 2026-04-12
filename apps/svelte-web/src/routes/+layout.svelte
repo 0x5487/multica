@@ -25,11 +25,17 @@
   });
 </script>
 
-<div class="flex h-screen w-full overflow-hidden bg-background">
-  {#if data.token}
+{#if data.token}
+  <div class="flex h-svh overflow-hidden bg-muted/30 p-2">
     <Sidebar />
-  {/if}
-  <main class="flex-1 h-full overflow-y-auto">
+    <div class="flex min-w-0 flex-1 flex-col overflow-hidden rounded-[1.25rem] border bg-background shadow-sm">
+      <main class="flex-1 overflow-y-auto">
+        {@render children()}
+      </main>
+    </div>
+  </div>
+{:else}
+  <main class="min-h-svh bg-background">
     {@render children()}
   </main>
-</div>
+{/if}

@@ -7,8 +7,6 @@ export class IssueStore {
   constructor(private api: SvelteApiClient) {}
 
   async fetchIssues(workspaceId: string) {
-    if (this.issuesByWorkspace[workspaceId]) return; // Simple cache
-
     this.loading = true;
     try {
       const data = await this.api.listIssues({ workspace_id: workspaceId });
@@ -16,6 +14,8 @@ export class IssueStore {
         ...this.issuesByWorkspace,
         [workspaceId]: data.issues
       };
+    } catch (error) {
+      console.error("Failed to fetch issues:", error);
     } finally {
       this.loading = false;
     }

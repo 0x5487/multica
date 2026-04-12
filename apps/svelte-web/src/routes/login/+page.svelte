@@ -8,9 +8,9 @@
   <Card.Root class="w-full max-w-sm">
     <Card.Header>
       <Card.Title class="text-2xl">
-        <h1 class="font-bold">Multica Login</h1>
+        <h1 class="font-bold">Multica</h1>
       </Card.Title>
-      <Card.Description>Enter your email below to login to your account.</Card.Description>
+      <Card.Description>Enter your email and name to login to your account.</Card.Description>
     </Card.Header>
     <Card.Content>
       <form method="POST" class="grid gap-4">
@@ -18,7 +18,7 @@
           <Input name="email" type="email" placeholder="Email" required />
         </div>
         <div class="grid gap-2">
-          <Input name="code" type="text" placeholder="Verification Code (Default: 888888)" />
+          <Input name="name" type="text" placeholder="Name" />
         </div>
         <Button type="submit" class="w-full">Sign in</Button>
       </form>
