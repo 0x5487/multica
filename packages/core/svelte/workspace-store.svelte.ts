@@ -10,7 +10,7 @@ export class WorkspaceStore {
   async fetchWorkspaces() {
     this.loading = true;
     try {
-      const data = await this.api.request<any[]>('/workspaces');
+      const data = await this.api.listWorkspaces();
       this.workspaces = data || [];
     } catch (e) {
       console.error("Failed to fetch workspaces:", e);
@@ -22,5 +22,6 @@ export class WorkspaceStore {
 
   setActiveWorkspace(id: string) {
     this.activeWorkspaceId = id;
+    this.api.setWorkspaceId(id);
   }
 }

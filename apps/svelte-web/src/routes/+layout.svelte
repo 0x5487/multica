@@ -7,7 +7,7 @@
   let { data, children } = $props();
   
   // Initialize Core Context (per-session)
-  const { api, workspaceStore } = setCoreContext("/api");
+  const { api, workspaceStore } = setCoreContext("");
 
   onMount(() => {
     if (window.matchMedia('(prefers-color-scheme: dark)').matches) {

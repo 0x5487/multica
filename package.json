@@ -4,7 +4,7 @@
   "private": true,
   "type": "module",
   "scripts": {
-    "dev:web": "turbo dev --filter=@multica/web",
+    "dev:web": "turbo dev --filter=@multica/svelte-web",
     "dev:desktop": "turbo dev --filter=@multica/desktop",
     "build": "turbo build",
     "typecheck": "turbo typecheck",

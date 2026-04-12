@@ -32,7 +32,9 @@ e2e/test-results
 coverage
 
 # Docs
-docs/
+docs/*
+!docs/package.json
 
 # Desktop app (not needed for web self-hosting)
-apps/desktop
+apps/desktop/*
+!apps/desktop/package.json

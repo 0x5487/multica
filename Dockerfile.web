@@ -7,18 +7,13 @@ WORKDIR /app
 
 # Copy workspace config and ALL package.json files for dependency resolution
 COPY pnpm-lock.yaml pnpm-workspace.yaml package.json turbo.json .npmrc ./
-COPY apps/web/package.json apps/web/
 COPY apps/svelte-web/package.json apps/svelte-web/
-COPY apps/desktop/package.json apps/desktop/
-COPY apps/docs/package.json apps/docs/
 COPY packages/core/package.json packages/core/
-COPY packages/ui/package.json packages/ui/
 COPY packages/ui-svelte/package.json packages/ui-svelte/
-COPY packages/views/package.json packages/views/
 COPY packages/tsconfig/package.json packages/tsconfig/
 COPY packages/eslint-config/package.json packages/eslint-config/
 
-RUN pnpm install --frozen-lockfile
+RUN pnpm install --frozen-lockfile --ignore-scripts --filter @multica/svelte-web...
 
 # --- Build ---
 FROM node:22-alpine AS builder
@@ -33,10 +28,13 @@ COPY --from=deps /app ./
 # Copy source
 COPY package.json turbo.json pnpm-workspace.yaml ./
 COPY apps/svelte-web/ apps/svelte-web/
-COPY packages/ packages/
+COPY packages/core/ packages/core/
+COPY packages/ui-svelte/ packages/ui-svelte/
+COPY packages/tsconfig/ packages/tsconfig/
+COPY packages/eslint-config/ packages/eslint-config/
 
 # Re-link and install any missing devDeps (ensure online for this step if needed, but deps should cover it)
-RUN pnpm install --frozen-lockfile
+RUN pnpm install --frozen-lockfile --ignore-scripts --filter @multica/svelte-web...
 
 # Build the Svelte web app
 RUN pnpm --filter @multica/svelte-web build

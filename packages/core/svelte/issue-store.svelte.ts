@@ -11,10 +11,10 @@ export class IssueStore {
 
     this.loading = true;
     try {
-      const data = await this.api.request<any[]>(`/workspaces/${workspaceId}/issues`);
+      const data = await this.api.listIssues({ workspace_id: workspaceId });
       this.issuesByWorkspace = {
         ...this.issuesByWorkspace,
-        [workspaceId]: data
+        [workspaceId]: data.issues
       };
     } finally {
       this.loading = false;
