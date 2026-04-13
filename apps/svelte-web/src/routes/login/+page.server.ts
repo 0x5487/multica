@@ -1,39 +1,23 @@
-import { redirect, type Actions } from '@sveltejs/kit';
+import { redirect, type Actions } from "@sveltejs/kit";
 
 export const actions: Actions = {
-  default: async ({ request, cookies }) => {
+  /**
+   * setToken: called client-side after verify-code succeeds.
+   * Stores the token in an httpOnly cookie and redirects to /issues.
+   */
+  setToken: async ({ request, cookies }) => {
     const data = await request.formData();
-    const email = data.get('email') as string;
-    const name = data.get('name') as string;
+    const token = data.get("token") as string;
+    if (!token) return { error: "No token provided" };
 
-    const backendUrl = process.env.REMOTE_API_URL || 'http://localhost:8080';
-
-    // 1. Send code request to backend (this initiates the login flow)
-    await fetch(`${backendUrl}/auth/send-code`, {
-      method: 'POST',
-      headers: { 'Content-Type': 'application/json' },
-      body: JSON.stringify({ email })
+    cookies.set("multica_token", token, {
+      path: "/",
+      httpOnly: true,
+      secure: false,
+      sameSite: "lax",
+      maxAge: 60 * 60 * 24 * 30, // 30 days
     });
 
-    // 2. Verify code request (E2E/Dev uses 888888 by default)
-    const verifyRes = await fetch(`${backendUrl}/auth/verify-code`, {
-      method: 'POST',
-      headers: { 'Content-Type': 'application/json' },
-      body: JSON.stringify({ email, code: '888888' }) // Using universal dev code
-    });
-
-    if (!verifyRes.ok) {
-      console.error("Verify failed", await verifyRes.text());
-      return { error: 'Invalid verification code' };
-    }
-
-    const verifyData = await verifyRes.json();
-    
-    if (verifyData.token) {
-      cookies.set('multica_token', verifyData.token, { path: '/', httpOnly: true, secure: false });
-      throw redirect(303, '/issues');
-    }
-
-    return { error: 'Failed to retrieve token' };
-  }
+    throw redirect(303, "/issues");
+  },
 };
